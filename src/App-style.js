@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import background from './assets/background.png'
 
 export const Main = styled.div`
   height: 100vh;
@@ -66,4 +67,46 @@ export const TitleMessage = styled.span`
 
 export const LastMessage = styled.span`
   color: ${({theme}) => theme.colors.secondary};
+`;
+
+export const ChatMessages = styled.div`
+  flex: 1;
+  background-image: url(${background});
+  background-size: contain;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const ChatMessagesArea = styled.div`
+  flex: 1;
+`;
+
+export const ChatInputArea = styled.div`
+  width: 100%;
+  height: 70px;
+  background-color: ${({theme}) => theme.colors.borderColor2};
+  box-sizing: border-box;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+`;
+
+export const ChatInput = styled.input`
+  width: 90%;
+  background-color: ${({theme}) => theme.colors.primary};
+  height: 45px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 4px;
+  font-size: 16px;
+`;
+
+export const SendMessage = styled.img`
+  width: 40px;
+  height: auto;
+  cursor: pointer;
 `;
