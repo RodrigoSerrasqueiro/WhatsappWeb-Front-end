@@ -1,9 +1,17 @@
 import { Background, ChatContacts, ChatContainer, ChatInput, ChatInputArea, ChatItem, ChatMessages, ChatMessagesArea, ChatOptions, LastMessage, Main, ProfileImg, SendMessage, TitleChatContainer, TitleMessage } from "./App-style";
 import profileImage from './assets/profile-img.jpg'
 import sendIcon from './assets/send.png'
+import socket from 'socket.io-client'
+import { useEffect } from "react";
 
+const io = socket('http://localhost:4000');
 
 function App() {
+
+  useEffect(() => {
+    io.emit('join', 'Um usuário entrou')
+  }, [])
+
   return (
    <Main>
     <Background></Background>
