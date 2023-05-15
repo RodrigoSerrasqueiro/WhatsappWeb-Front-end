@@ -1,16 +1,41 @@
-import { Background, ChatContacts, ChatContainer, ChatInput, ChatInputArea, ChatItem, ChatMessages, ChatMessagesArea, ChatOptions, LastMessage, Main, ProfileImg, SendMessage, TitleChatContainer, TitleMessage } from "./App-style";
+import { Background, ChatContacts, ChatContainer, ChatInput, ChatInputArea, ChatItem, ChatMessages, ChatMessagesArea, ChatOptions, JoinButton, LastMessage, LoginContainer, LoginContent, Main, ProfileImg, SendMessage, TitleChatContainer, TitleMessage, UserNameInput } from "./App-style";
 import profileImage from './assets/profile-img.jpg'
 import sendIcon from './assets/send.png'
 import socket from 'socket.io-client'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const io = socket('http://localhost:4000');
 
 function App() {
 
+  const [userName, setUserName] = useState('')
+  const [joined, setJoined] = useState(false)
+
   useEffect(() => {
-    io.emit('join', 'Um usuário entrou')
+    io.emit("join", 'Nome do usuário')
   }, [])
+
+  const handleJoin = () => {
+    if(userName) {
+      io.emit("join", userName);
+      setJoined(true)
+    }
+  }
+
+  if(!joined) {
+    return (
+      <LoginContainer>
+        <LoginContent>
+          <UserNameInput 
+            placeholder="Digite o seu nome"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <JoinButton onClick={handleJoin}>Entrar</JoinButton>
+        </LoginContent>
+      </LoginContainer>
+    )
+  }
 
   return (
    <Main>

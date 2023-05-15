@@ -110,3 +110,19 @@ export const SendMessage = styled.img`
   height: auto;
   cursor: pointer;
 `;
+
+export const LoginContainer = styled.div`
+
+`;
+
+export const LoginContent = styled.div`
+
+`;
+
+export const UserNameInput = styled.input`
+
+`;
+
+export const JoinButton = styled.button`
+
+`;
