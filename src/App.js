@@ -19,6 +19,7 @@ function App() {
       setUsers(users);
     })
     io.on("message", (message) => setMessages((messages) => [...messages, message]));
+    io.on("connect", (socket) => console.log(socket.id))
   }, [])
 
   const handleJoin = () => {
