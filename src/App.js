@@ -8,20 +8,30 @@ const io = socket('http://localhost:4000');
 
 function App() {
 
-  const [userName, setUserName] = useState('')
-  const [joined, setJoined] = useState(false)
-  const [users, setUsers] = useState([])
+  const [userName, setUserName] = useState('');
+  const [joined, setJoined] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     io.on("users", (users) => {
-      setUsers(users)
+      setUsers(users);
     })
+    io.on("message", (message) => setMessages((messages) => [...messages, message]));
   }, [])
 
   const handleJoin = () => {
     if(userName) {
       io.emit("join", userName);
-      setJoined(true)
+      setJoined(true);
+    }
+  }
+
+  const handleMessage = () => {
+    if(message) {
+      io.emit("message", {message, userName});
+      setMessage('');
     }
   }
 
@@ -75,12 +85,18 @@ function App() {
         </ChatOptions>
 
         <ChatMessagesArea>
-
+          {messages.map((message, index) => (
+            <span key={index}>{message.userName? `${message.userName}: ` : ''} {message.message}</span>
+          ))}
         </ChatMessagesArea>
 
         <ChatInputArea>
-          <ChatInput placeholder="Mensagem"/>
-          <SendMessage alt="Ícone enviar" src={sendIcon}/>
+          <ChatInput 
+            placeholder="Mensagem"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <SendMessage alt="Ícone enviar" src={sendIcon} onClick={() => handleMessage()}/>
         </ChatInputArea>
 
       </ChatMessages>

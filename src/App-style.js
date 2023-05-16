@@ -80,6 +80,8 @@ export const ChatMessages = styled.div`
 
 export const ChatMessagesArea = styled.div`
   flex: 1;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ChatInputArea = styled.div`
