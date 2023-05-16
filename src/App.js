@@ -10,9 +10,12 @@ function App() {
 
   const [userName, setUserName] = useState('')
   const [joined, setJoined] = useState(false)
+  const [users, setUsers] = useState([])
 
   useEffect(() => {
-    io.emit("join", 'Nome do usuário')
+    io.on("users", (users) => {
+      setUsers(users)
+    })
   }, [])
 
   const handleJoin = () => {
@@ -59,7 +62,14 @@ function App() {
           <ProfileImg alt="Imagem de perfil" src={profileImage} />
           <TitleChatContainer>
             <TitleMessage>NetWorking Profissão Programador</TitleMessage>
-            <LastMessage>Lucas, Paulo, Você </LastMessage>
+            <LastMessage>
+             {users.map((user, index) => (
+              <>
+              {user.userName}{index + 1 < users.length && users.length !== 0? ', ' : ''}
+              
+              </>
+             ))}
+            </LastMessage>
           </TitleChatContainer>
         </ChatItem>
         </ChatOptions>
