@@ -1,4 +1,4 @@
-import { Background, ChatContacts, ChatContainer, ChatInput, ChatInputArea, ChatItem, ChatMessages, ChatMessagesArea, ChatOptions, JoinButton, LastMessage, LoginContainer, LoginContent, Main, ProfileImg, SendMessage, TitleChatContainer, TitleMessage, UserNameInput } from "./App-style";
+import { Background, ChatContacts, ChatContainer, ChatInput, ChatInputArea, ChatItem, ChatMessages, ChatMessagesArea, ChatOptions, JoinButton, LastMessage, LoginContainer, LoginContent, Main, Message, MessageContainer, ProfileImg, SendMessage, TitleChatContainer, TitleMessage, UserNameInput } from "./App-style";
 import profileImage from './assets/profile-img.jpg'
 import sendIcon from './assets/send.png'
 import socket from 'socket.io-client'
@@ -13,13 +13,14 @@ function App() {
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [myID, setMyID] = useState('');
 
   useEffect(() => {
     io.on("users", (users) => {
       setUsers(users);
     })
     io.on("message", (message) => setMessages((messages) => [...messages, message]));
-    io.on("connect", (socket) => console.log(socket.id))
+    io.on("connect", () => setMyID(io.id))
   }, [])
 
   const handleJoin = () => {
@@ -75,10 +76,10 @@ function App() {
             <TitleMessage>NetWorking Profissão Programador</TitleMessage>
             <LastMessage>
              {users.map((user, index) => (
-              <>
+              <span key={index}> 
               {user.userName}{index + 1 < users.length && users.length !== 0? ', ' : ''}
               
-              </>
+              </span>
              ))}
             </LastMessage>
           </TitleChatContainer>
@@ -87,7 +88,16 @@ function App() {
 
         <ChatMessagesArea>
           {messages.map((message, index) => (
-            <span key={index}>{message.userName? `${message.userName}: ` : ''} {message.message}</span>
+            <MessageContainer
+            key={index}
+            myMessage={message.userID === myID}
+            >
+              <Message 
+                myMessage={message.userID === myID}
+              >
+                {message.userName? `${message.userName}: ` : ''} {message.message}
+              </Message>
+            </MessageContainer>
           ))}
         </ChatMessagesArea>
 

@@ -82,6 +82,54 @@ export const ChatMessagesArea = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  padding: 10px 30px 0 30px;
+  overflow-y: scroll;
+`;
+
+export const MessageContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: ${({myMessage}) => myMessage ? 'flex-end' : 'flex-start'};
+`;
+
+export const Message = styled.span`
+  display: inline-block;
+  max-width: 80%;
+  padding: 8px;
+  background-color: ${({ myMessage }) => (myMessage ? '#007bff' : '#f1f1f1')};
+  color: ${({ myMessage }) => (myMessage ? '#fff' : '#333')};
+  border-radius: 8px;
+  margin-bottom: 5px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    border: 8px solid transparent;
+    border-bottom-color: ${({ myMessage }) => (myMessage ? '#007bff' : '#f1f1f1')};
+    z-index: 1;
+  }
+
+  ${({ myMessage }) =>
+    myMessage
+      ? `
+    border-top-right-radius: 0;
+    left: 0;
+    &::before {
+      left: 100%;
+      border-left-width: 0;
+    }
+  `
+      : `
+    border-top-left-radius: 0;
+    right: 0;
+    &::before {
+      right: 100%;
+      border-right-width: 0;
+    }
+  `}
 `;
 
 export const ChatInputArea = styled.div`
