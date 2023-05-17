@@ -84,7 +84,17 @@ export const ChatMessagesArea = styled.div`
   flex-direction: column;
   box-sizing: border-box;
   padding: 10px 30px 0 30px;
-  overflow-y: scroll;
+  max-height: 100%;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #8c8c8c;
+    border-radius: 20px;
+  }
 `;
 
 export const MessageContainer = styled.div`
@@ -106,9 +116,9 @@ export const Message = styled.span`
   &::before {
     content: '';
     position: absolute;
-    top: -8px;
+    top: 0;
     border: 8px solid transparent;
-    border-bottom-color: ${({ myMessage }) => (myMessage ? '#007bff' : '#f1f1f1')};
+    border-top-color: ${({ myMessage }) => (myMessage ? '#007bff' : '#f1f1f1')};
     z-index: 1;
   }
 
