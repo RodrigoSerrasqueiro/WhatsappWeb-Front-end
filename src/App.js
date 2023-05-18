@@ -2,7 +2,7 @@ import { Background, ChatContacts, ChatContainer, ChatInput, ChatInputArea, Chat
 import profileImage from './assets/profile-img.jpg'
 import sendIcon from './assets/send.png'
 import socket from 'socket.io-client'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const io = socket('http://localhost:4000');
 
@@ -30,10 +30,23 @@ function App() {
     }
   }
 
+  
+  const textAreaRef = useRef(null);
+  
+  const handleTextareaChange = () => {
+    const textarea = textAreaRef.current;
+    textarea.style.height = 'auto'; 
+    textarea.style.height = `${textarea.scrollHeight}px`; 
+  };
+
+
   const handleMessage = () => {
-    if(message) {
+    if(message.trim()) {
       io.emit("message", {message, userName});
       setMessage('');
+      if (textAreaRef.current) {
+        textAreaRef.current.focus()
+      }
     }
   }
 
@@ -110,12 +123,17 @@ function App() {
           <ChatInput 
             placeholder="Mensagem"
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => {
+              setMessage(e.target.value)
+              handleTextareaChange()
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleMessage()
               }
             }}
+            ref={textAreaRef}
+            currentHeight={textAreaRef.current ? textAreaRef.current.scrollHeight : 0}
           />
           <SendMessage alt="Ícone enviar" src={sendIcon} onClick={() => handleMessage()}/>
         </ChatInputArea>

@@ -98,14 +98,15 @@ export const ChatMessagesArea = styled.div`
 `;
 
 export const MessageContainer = styled.div`
-  width: 100%;
+  max-width: 100%;
   display: flex;
   justify-content: ${({myMessage}) => myMessage ? 'flex-end' : 'flex-start'};
 `;
 
 export const Message = styled.span`
-  display: inline-block;
-  max-width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 50%;
   padding: 8px;
   background-color: ${({ myMessage }) => (myMessage ? '#007bff' : '#f1f1f1')};
   color: ${({ myMessage }) => (myMessage ? '#fff' : '#333')};
@@ -144,30 +145,32 @@ export const Message = styled.span`
 
 export const ChatInputArea = styled.div`
   width: 100%;
-  height: 70px;
+  height: auto;
   background-color: ${({theme}) => theme.colors.borderColor2};
   box-sizing: border-box;
   padding: 0 10px;
   display: flex;
-  align-items: center;
   justify-content: space-around;
 `;
 
-export const ChatInput = styled.input`
+export const ChatInput = styled.textarea`
   width: 90%;
-  background-color: ${({theme}) => theme.colors.primary};
-  height: 45px;
+  background-color: ${({ theme }) => theme.colors.primary};
   border: none;
   outline: none;
   border-radius: 8px;
   box-sizing: border-box;
-  padding: 4px;
+  padding-top: 5px;
   font-size: 16px;
+  resize: none; 
+  overflow-y: hidden; 
+  transition: height 0.3s ease;
+  height: ${({ currentHeight }) => currentHeight}px;
 `;
 
 export const SendMessage = styled.img`
   width: 40px;
-  height: auto;
+  height: 40px;
   cursor: pointer;
 `;
 
