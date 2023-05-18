@@ -52,6 +52,11 @@ function App() {
     )
   }
 
+  let lastMessage = {};
+  if (messages.length > 0) {
+    lastMessage = messages[messages.length - 1];
+  }
+
   return (
    <Main>
     <Background></Background>
@@ -63,7 +68,7 @@ function App() {
           <ProfileImg alt="Imagem de perfil" src={profileImage} />
           <TitleChatContainer>
             <TitleMessage>NetWorking Profissão Programador</TitleMessage>
-            <LastMessage>Paulo: Bom dia!</LastMessage>
+            <LastMessage>{lastMessage.userName}: {lastMessage.message}</LastMessage>
           </TitleChatContainer>
         </ChatItem>
       </ChatContacts>
@@ -106,6 +111,11 @@ function App() {
             placeholder="Mensagem"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleMessage()
+              }
+            }}
           />
           <SendMessage alt="Ícone enviar" src={sendIcon} onClick={() => handleMessage()}/>
         </ChatInputArea>
