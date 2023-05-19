@@ -148,9 +148,10 @@ export const ChatInputArea = styled.div`
   height: auto;
   background-color: ${({theme}) => theme.colors.borderColor2};
   box-sizing: border-box;
-  padding: 0 10px;
+  padding: 5px 10px;
   display: flex;
   justify-content: space-around;
+  align-items: center;
 `;
 
 export const ChatInput = styled.textarea`

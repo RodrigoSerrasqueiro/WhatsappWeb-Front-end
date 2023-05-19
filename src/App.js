@@ -34,9 +34,14 @@ function App() {
   const textAreaRef = useRef(null);
   
   const handleTextareaChange = () => {
-    const textarea = textAreaRef.current;
-    textarea.style.height = 'auto'; 
-    textarea.style.height = `${textarea.scrollHeight}px`; 
+    
+    const content = textAreaRef.current.value;
+
+    if (content.includes('\n')) {
+      const textarea = textAreaRef.current;
+      textarea.style.height = 'auto'; 
+      textarea.style.height = `${textarea.scrollHeight}px`; 
+    }
   };
 
 
