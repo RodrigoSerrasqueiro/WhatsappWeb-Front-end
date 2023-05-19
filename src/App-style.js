@@ -163,6 +163,7 @@ export const ChatInput = styled.textarea`
   box-sizing: border-box;
   padding-top: 5px;
   font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
   resize: none; 
   overflow-y: hidden; 
   transition: height 0.3s ease;
