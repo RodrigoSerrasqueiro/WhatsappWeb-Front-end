@@ -1,4 +1,4 @@
-import { Background, ChatContacts, ChatContainer, ChatInput, ChatInputArea, ChatItem, ChatMessages, ChatMessagesArea, ChatOptions, JoinButton, LastMessage, LoginContainer, LoginContent, Main, Message, MessageContainer, ProfileImg, SendMessage, TitleChatContainer, TitleMessage, UserNameInput } from "./App-style";
+import { Background, ChatContacts, ChatContainer, ChatInput, ChatInputArea, ChatItem, ChatMessages, ChatMessagesArea, ChatOptions, JoinButton, LastMessage, LoginContainer, LoginContent, Main, Message, MessageContainer, ProfileImg, SendMessage, SendMessageContainer, TitleChatContainer, TitleMessage, UserNameInput } from "./App-style";
 import profileImage from './assets/profile-img.jpg'
 import sendIcon from './assets/send.png'
 import socket from 'socket.io-client'
@@ -134,13 +134,16 @@ function App() {
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                handleMessage()
+                e.preventDefault();
+                handleMessage();
               }
             }}
             ref={textAreaRef}
             currentHeight={textAreaRef.current ? textAreaRef.current.scrollHeight : 0}
           />
-          <SendMessage alt="Ícone enviar" src={sendIcon} onClick={() => handleMessage()}/>
+          <SendMessageContainer>
+            <SendMessage alt="Ícone enviar" src={sendIcon} onClick={() => handleMessage()}/>
+          </SendMessageContainer>
         </ChatInputArea>
 
       </ChatMessages>
